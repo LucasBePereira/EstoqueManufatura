@@ -1,4 +1,4 @@
-Projeto de Pós-graduação 2025 - DM1106
+Projeto de Pós-graduação 2025 - DM106
 
 O projeto se basea em replicar um estoque de uma fábrica de autopeças.
 
