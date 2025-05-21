@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36109.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{F488B22A-C7B6-4C4E-B19A-05726F3C5FE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstoqueManufatua_API", "WebApplication1\EstoqueManufatua_API.csproj", "{F488B22A-C7B6-4C4E-B19A-05726F3C5FE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstoqueManufatura_Console", "EstoqueManufatura_Console\EstoqueManufatura_Console.csproj", "{689424DC-C66D-4CB5-873A-632D566FBAAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F488B22A-C7B6-4C4E-B19A-05726F3C5FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F488B22A-C7B6-4C4E-B19A-05726F3C5FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F488B22A-C7B6-4C4E-B19A-05726F3C5FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689424DC-C66D-4CB5-873A-632D566FBAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689424DC-C66D-4CB5-873A-632D566FBAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689424DC-C66D-4CB5-873A-632D566FBAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689424DC-C66D-4CB5-873A-632D566FBAAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
