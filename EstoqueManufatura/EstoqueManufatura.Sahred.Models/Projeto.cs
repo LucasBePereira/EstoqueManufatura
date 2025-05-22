@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EstoqueManufatura_Console
 {
-    internal class Projeto
+    public class Projeto
     {
         public string Plataforma { get; set; } // Project name
 

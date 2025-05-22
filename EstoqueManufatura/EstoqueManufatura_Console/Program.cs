@@ -1,10 +1,56 @@
 ﻿using EstoqueManufatura_Console;
-
+using EstoqueManufatura.Shared.Data.BD;
 internal class Program
 {
     public static Dictionary<string, Componente> ComponenteList = new();
     private static void Main(string[] args)
     {
+
+        var ComponenteDAL = new ComponenteDAL();
+
+        //ComponenteDAL.Create(new Componente("CC20Y4040", "Componente Comprado Base Metalica"));
+
+        var ComponenteList = ComponenteDAL.Reach();
+
+        ComponenteList = ComponenteDAL.Reach();
+        foreach (var item in ComponenteList)
+        {
+            Console.WriteLine(item);
+        }
+
+        ComponenteDAL.Update(new Componente("CC20Y4040", "Componente Comprado Base com postiço"),2);
+
+        ComponenteList = ComponenteDAL.Reach();
+        foreach (var item in ComponenteList)
+        {
+            Console.WriteLine(item);
+        }
+
+        ComponenteDAL.Delete(2);
+
+        ComponenteList = ComponenteDAL.Reach();
+        foreach (var item in ComponenteList)
+        {
+            Console.WriteLine(item);
+        }
+
+        return;
+
+        try
+        {
+            using var connection = new EstoqueManufaturaContext().Connect();
+            connection.Open();
+            Console.WriteLine(connection.State);
+
+        }
+
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erro ao conectar ao banco de dados: " + ex.Message);
+            return;
+        }
+
+        return;
 
         bool exit = false;
         while (!exit)

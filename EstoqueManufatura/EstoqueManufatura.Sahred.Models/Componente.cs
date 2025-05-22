@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EstoqueManufatura_Console
 {
-    internal class Componente
+    public class Componente
     {
         public Componente(string pn, string descricao)
         {

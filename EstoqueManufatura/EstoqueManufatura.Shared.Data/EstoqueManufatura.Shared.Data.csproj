@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -14,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EstoqueManufatura.Sahred.Models\EstoqueManufatura.Sahred.Models.csproj" />
-    <ProjectReference Include="..\EstoqueManufatura.Shared.Data\EstoqueManufatura.Shared.Data.csproj" />
   </ItemGroup>
 
 </Project>
