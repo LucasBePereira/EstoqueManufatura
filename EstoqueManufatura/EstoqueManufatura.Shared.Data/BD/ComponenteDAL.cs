@@ -10,71 +10,37 @@ namespace EstoqueManufatura.Shared.Data.BD
 {
     public class ComponenteDAL
     {
-        public void Create(Componente componente)
+        private readonly Context context1;
+
+        public ComponenteDAL()
         {
-            using var connection = new EstoqueManufaturaContext().Connect();
-            connection.Open();
-
-            string sql = "INSERT INTO Componente (PN, Descricao) VALUES (@PN, @Descricao)";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-
-            cmd.Parameters.AddWithValue("@PN", componente.PN);
-            cmd.Parameters.AddWithValue("@Descricao", componente.Descricao);
-
-            int retorno = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {retorno} \n");
+            context1 = new Context();
         }
 
-        public IEnumerable<Componente> Reach()
+        public void create(Componente cpn)
         {
-            var list = new List<Componente>();
-
-            using var connection = new EstoqueManufaturaContext().Connect();
-            connection.Open();
-
-            string sql = "SELECT * FROM Componente";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-
-            using SqlDataReader reader = cmd.ExecuteReader();
-            {
-                while (reader.Read())
-                {
-                    string ComponentPN = Convert.ToString(reader["PN"]);
-                    string ComponentDescriao = Convert.ToString(reader["Descricao"]);
-                    Componente componente = new Componente(ComponentPN, ComponentDescriao);
-                    list.Add(componente);
-                }
-
-                return list;
-
-            }
+            
+            context1.Set<Componente>().Add(cpn);
+            context1.SaveChanges();
+        }
+        public IEnumerable<Componente> Read()
+        {
+            
+            return context1.Componente.ToList();
         }
 
-        public void Update(Componente componente, int id)
+        public void update(Componente cpn)
         {
-            using var connection = new EstoqueManufaturaContext().Connect();
-            connection.Open();
-            string sql = $"UPDATE Componente SET PN = @PN, Descricao = @Descricao WHERE Id = @id";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@PN", componente.PN);
-            cmd.Parameters.AddWithValue("@Descricao", componente.Descricao);
-            cmd.Parameters.AddWithValue("@id", id);
-
-            int retorno = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {retorno} \n");
+            
+            context1.Componente.Update(cpn);
+            context1.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void delete(Componente cpn)
         {
-            using var connection = new EstoqueManufaturaContext().Connect();
-            connection.Open();
-
-            string sql = $"DELETE FROM Componente WHERE Id = @id";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-
-            cmd.Parameters.AddWithValue("@id", id);
-            int retorno = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {retorno} \n");
+            
+            context1.Componente.Remove(cpn);
+            context1.SaveChanges();
         }
     }
 }

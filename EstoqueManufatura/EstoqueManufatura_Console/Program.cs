@@ -2,161 +2,146 @@
 using EstoqueManufatura.Shared.Data.BD;
 internal class Program
 {
-    public static Dictionary<string, Componente> ComponenteList = new();
+    public static Dictionary<string,Componente> ComponenteList = new();
     private static void Main(string[] args)
     {
 
         var ComponenteDAL = new ComponenteDAL();
 
-        //ComponenteDAL.Create(new Componente("CC20Y4040", "Componente Comprado Base Metalica"));
+        //ComponenteDAL.create(new Componente("CC20Y4040", "Componente Comprado Base Metalica"));
 
-        var ComponenteList = ComponenteDAL.Reach();
+        //ComponenteDAL.update(new Componente("CC20Y5050", "Componente Comprado Base Metalica Atualizado") {Id = 1003});
 
-        ComponenteList = ComponenteDAL.Reach();
+        //omponenteDAL.delete(new Componente("CC20Y5050", "Componente Comprado Base Metalica Atualizado") {Id = 1003});
+
+        var ComponenteList = ComponenteDAL.Read();
         foreach (var item in ComponenteList)
         {
             Console.WriteLine(item);
         }
-
-        ComponenteDAL.Update(new Componente("CC20Y4040", "Componente Comprado Base com postiço"),2);
-
-        ComponenteList = ComponenteDAL.Reach();
-        foreach (var item in ComponenteList)
-        {
-            Console.WriteLine(item);
-        }
-
-        ComponenteDAL.Delete(2);
-
-        ComponenteList = ComponenteDAL.Reach();
-        foreach (var item in ComponenteList)
-        {
-            Console.WriteLine(item);
-        }
-
         return;
 
-        try
-        {
-            using var connection = new EstoqueManufaturaContext().Connect();
-            connection.Open();
-            Console.WriteLine(connection.State);
+        //try
+        //{
+        //    using var connection = new EstoqueManufaturaContext().Connect();
+        //    connection.Open();
+        //    Console.WriteLine(connection.State);
 
-        }
+        //}
 
-        catch (Exception ex)
-        {
-            Console.WriteLine("Erro ao conectar ao banco de dados: " + ex.Message);
-            return;
-        }
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine("Erro ao conectar ao banco de dados: " + ex.Message);
+        //    return;
+        //}
 
-        return;
+        //return;
 
-        bool exit = false;
-        while (!exit)
-        {
-            Console.WriteLine("Você chegou no Estoque Manufatura\n");
-            Console.WriteLine("Digite 1 para registrar um Componente");
-            Console.WriteLine("Digite 2 para registrar a plataforma de um componente");
-            Console.WriteLine("Digite 3 para mostrar todos os componentes");
-            Console.WriteLine("Digite 4 para mostrar as plataformas de um componente");
-            Console.WriteLine("Digite -1 para sair\n");
-            Console.WriteLine("Informe sua opção:");
-            int option = int.Parse(Console.ReadLine());
+        //bool exit = false;
+        //while (!exit)
+        //{
+        //    Console.WriteLine("Você chegou no Estoque Manufatura\n");
+        //    Console.WriteLine("Digite 1 para registrar um Componente");
+        //    Console.WriteLine("Digite 2 para registrar a plataforma de um componente");
+        //    Console.WriteLine("Digite 3 para mostrar todos os componentes");
+        //    Console.WriteLine("Digite 4 para mostrar as plataformas de um componente");
+        //    Console.WriteLine("Digite -1 para sair\n");
+        //    Console.WriteLine("Informe sua opção:");
+        //    int option = int.Parse(Console.ReadLine());
 
-            switch (option) {
+        //    switch (option) {
 
-                case -1:
-                    exit = true;
-                    break;
+        //        case -1:
+        //            exit = true;
+        //            break;
 
-                case 1:
-                    RegistrodeComponente();
-                    break;
-                case 2:
-                    RegistrodePlataforma();
-                    break;
-                case 3:
-                    Componenteget();
-                    break;
-                case 4:
-                    Plataformaget();
-                    break;
+        //        case 1:
+        //            RegistrodeComponente();
+        //            break;
+        //        case 2:
+        //            RegistrodePlataforma();
+        //            break;
+        //        case 3:
+        //            Componenteget();
+        //            break;
+        //        case 4:
+        //            Plataformaget();
+        //            break;
 
-                default:
-                    Console.WriteLine("Opção inválida, tente novamente.");
-                    break;
-            }
-    }
+        //        default:
+        //            Console.WriteLine("Opção inválida, tente novamente.");
+        //            break;
+        //    }
+    //}
 
 
 }
 
-    private static void Plataformaget()
-    {
-        Console.Clear();
-        Console.WriteLine("Exibir detalhes do componente\n");
-        Console.WriteLine("Digite o PN do componente cuja Plataformas deseja  consultar:\n");
-        string pn = Console.ReadLine();
-        if (ComponenteList.ContainsKey(pn))
-        {
-            Componente p = ComponenteList[pn];
-            p.ShowPlataformas();
-            Console.WriteLine("\n");
-        }
-        else
-        {
-            Console.WriteLine($"Componente {pn} não encontrado.\n");
-        }
-    }
+//    private static void Plataformaget()
+//    {
+//        Console.Clear();
+//        Console.WriteLine("Exibir detalhes do componente\n");
+//        Console.WriteLine("Digite o PN do componente cuja Plataformas deseja  consultar:\n");
+//        string pn = Console.ReadLine();
+//        if (ComponenteList.ContainsKey(pn))
+//        {
+//            Componente p = ComponenteList[pn];
+//            p.ShowPlataformas();
+//            Console.WriteLine("\n");
+//        }
+//        else
+//        {
+//            Console.WriteLine($"Componente {pn} não encontrado.\n");
+//        }
+//    }
 
-    private static void Componenteget()
-    {
-        Console.Clear();
-        Console.WriteLine("Lista dos componentes\n");
-        foreach (var item in ComponenteList.Values)
-        {
-            Console.WriteLine(item);
-            Console.WriteLine("\n");
-        }
-    }
+//    private static void Componenteget()
+//    {
+//        Console.Clear();
+//        Console.WriteLine("Lista dos componentes\n");
+//        foreach (var item in ComponenteList.Values)
+//        {
+//            Console.WriteLine(item);
+//            Console.WriteLine("\n");
+//        }
+//    }
 
-    private static void RegistrodePlataforma()
-    {
-        Console.Clear();
-        Console.WriteLine("Registro de Plataformas\n");
-        Console.WriteLine("Digite o PN do componente cuja Plataforma será registrada:\n");
-        string pn = Console.ReadLine();
-        if (ComponenteList.ContainsKey(pn))
-        {
-            Console.WriteLine($"Digite o nome da plataforma a ser registrada para {pn}:\n");
-            string plataforma = Console.ReadLine();
-            Console.WriteLine("Digite a Motadora da plataforma:\n");
-            string montadora = Console.ReadLine();
-            Componente p = ComponenteList[pn];
-            p.AdicionarProjeto(new Projeto(plataforma, montadora));
+//    private static void RegistrodePlataforma()
+//    {
+//        Console.Clear();
+//        Console.WriteLine("Registro de Plataformas\n");
+//        Console.WriteLine("Digite o PN do componente cuja Plataforma será registrada:\n");
+//        string pn = Console.ReadLine();
+//        if (ComponenteList.ContainsKey(pn))
+//        {
+//            Console.WriteLine($"Digite o nome da plataforma a ser registrada para {pn}:\n");
+//            string plataforma = Console.ReadLine();
+//            Console.WriteLine("Digite a Motadora da plataforma:\n");
+//            string montadora = Console.ReadLine();
+//            Componente p = ComponenteList[pn];
+//            p.AdicionarProjeto(new Projeto(plataforma, montadora));
 
-            Console.WriteLine($"Plataforma {plataforma} registrada com sucesso!\n");
-        }
-        else
-        {
-            Console.WriteLine($"Componente {pn} não encontrado.\n");
-        }
-    }
+//            Console.WriteLine($"Plataforma {plataforma} registrada com sucesso!\n");
+//        }
+//        else
+//        {
+//            Console.WriteLine($"Componente {pn} não encontrado.\n");
+//        }
+//    }
 
-    private static void RegistrodeComponente()
-    {
-        Console.Clear();
-        Console.WriteLine("Registro de componente\n");
-        Console.WriteLine("Digite o PN [LLNNLNNNN] do componente a ser cadastrado:\n");
-        string pn = Console.ReadLine();
-        Console.WriteLine("Digite a descrição do componente:\n");
-        string descricao = Console.ReadLine();
+//    private static void RegistrodeComponente()
+//    {
+//        Console.Clear();
+//        Console.WriteLine("Registro de componente\n");
+//        Console.WriteLine("Digite o PN [LLNNLNNNN] do componente a ser cadastrado:\n");
+//        string pn = Console.ReadLine();
+//        Console.WriteLine("Digite a descrição do componente:\n");
+//        string descricao = Console.ReadLine();
 
-        Componente c = new(pn, descricao);
-        ComponenteList.Add(pn, c);
+//        Componente c = new(pn, descricao);
+//        ComponenteList.Add(pn, c);
 
-        Console.WriteLine($"Componente {pn} registrado com sucesso!\n");
+//        Console.WriteLine($"Componente {pn} registrado com sucesso!\n");
 
-    }
+//    }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,20 +10,22 @@ namespace EstoqueManufatura_Console
 {
     public class Componente
     {
-        public Componente(string pn, string descricao)
+        public Componente(string PN, string descricao)
         {
-            PN = pn;
+            this.PN = PN;
             Descricao = descricao;
         }
 
         public string PN { get; set; } // Part Number
-                                        
+                                       
         public string Descricao { get; set; } // Description
+
+        public int Id { get; set; } // ID   
 
         private List<Projeto> plataformas = new();
         public override string ToString()
         {
-            return $"PN: {PN}";
+            return $@"{Id}: {PN}";
         }
 
         public void AdicionarProjeto(Projeto p)
