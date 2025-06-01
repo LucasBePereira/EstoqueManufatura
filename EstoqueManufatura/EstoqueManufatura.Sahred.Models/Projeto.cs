@@ -12,6 +12,8 @@ namespace EstoqueManufatura_Console
 
         public string Montadora { get; set; } // Project description
 
+        public int Id { get; set; }
+
         public Projeto(string plataforma, string montadora)
         {
             Plataforma = plataforma;

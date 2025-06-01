@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,17 +8,18 @@ namespace EstoqueManufatura_Console
 {
     public class Componente
     {
-        public Componente(string PN, string descricao)
+        public Componente(string PN, string Descricao)
         {
             this.PN = PN;
-            Descricao = descricao;
+            this.Descricao = Descricao;
         }
 
         public string PN { get; set; } // Part Number
-                                       
+
         public string Descricao { get; set; } // Description
 
         public int Id { get; set; } // ID   
+
 
         private List<Projeto> plataformas = new();
         public override string ToString()
@@ -49,5 +48,6 @@ namespace EstoqueManufatura_Console
                 }
             }
         }
+        
     }
 }
