@@ -12,9 +12,17 @@ namespace EstoqueManufatua_API.EndPoints
         {
             app.MapGet("/Projeto", ([FromServices] DAL<Projeto> dal) =>
             {
-                var catlist = dal.Read();
-                var projetoResponseList = EntityListToResponseList(catlist);
+                var projlist = dal.Read();
+                var projetoResponseList = EntityListToResponseList(projlist);
                 return Results.Ok(projetoResponseList);
+            }
+            );
+
+            app.MapGet("/Projeto/{id}", (int id, [FromServices] DAL<Projeto> dal) =>
+            {
+                var projList = dal.ReadBy(c => c.Id == id);
+                if (projList == null) return Results.NotFound("Projeto não encontrado.");
+                return Results.Ok(EntityToResponse(projList));
             }
             );
 

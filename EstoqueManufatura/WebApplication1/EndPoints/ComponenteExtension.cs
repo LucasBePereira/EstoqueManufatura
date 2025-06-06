@@ -1,5 +1,6 @@
 ﻿using EstoqueManufatua_API.Requests;
 using EstoqueManufatua_API.Response;
+using EstoqueManufatura.Sahred.Models;
 using EstoqueManufatura.Shared.Data.BD;
 using EstoqueManufatura_Console;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,23 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPost("/Componente", ([FromServices] DAL<Componente> dal, [FromBody] ComponenteRequest c) =>
+            app.MapGet("/Componente/{id}", (int id,[FromServices] DAL<Componente> dal) =>
             {
-                dal.create(new Componente(c.PN, c.Descricao));
+                var comp = dal.ReadBy(c => c.Id == id);
+                if (comp == null) return Results.NotFound("Componente não encontrado.");
+                return Results.Ok(EntityToResponse(comp));
+            }
+            );
+
+            app.MapPost("/Componente", ([FromServices] DAL<Componente> dal,[FromServices]DAL<Estoque> estoqdal, [FromBody] ComponenteRequest c) =>
+            {
+                dal.create(
+                    new Componente(c.PN, c.Descricao)
+                    { Estoques = c.Estoques is not null?
+                        EstoqueRequestConvert(c.Estoques,estoqdal): 
+                        new List<Estoque>()
+                    }
+                );
                 return Results.Created();
             }
             );
@@ -50,6 +65,26 @@ namespace EstoqueManufatua_API.EndPoints
                 return Results.Created();
 
             });
+        }
+
+        private static List<Estoque> EstoqueRequestConvert(ICollection<EstoqueRequest> EstoqList,DAL<Estoque>estodal)
+        {
+            var estoqueList = new List<Estoque>();
+            foreach (var item in EstoqList)
+            {
+                var estoq = RequestToEntity(item);
+                var estoqBusca = estodal.ReadBy(d => d.Nome.ToUpper().Equals(estoq.Nome.ToUpper()));
+                if (estoqBusca is not null) estoqueList.Add(estoqBusca);
+                else estoqueList.Add(estoq);
+
+            }
+            
+            return estoqueList;
+        }
+
+        private static Estoque RequestToEntity(EstoqueRequest d)
+        {
+            return new Estoque() { Nome = d.Name};
         }
 
         private static ICollection<ComponenteResponse> EntityListToResponseList(IEnumerable<Componente> entities)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EstoqueManufatura.Sahred.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace EstoqueManufatura_Console
 
         public virtual ICollection<Projeto> Projetos { get; set; } = new List<Projeto>(); // Projects associated with the component
 
+        public virtual ICollection<Estoque> Estoques { get; set; }  // Stock associated with the component
         //private List<Projeto> plataformas = new();
         public override string ToString()
         {
