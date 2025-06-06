@@ -57,9 +57,9 @@ namespace EstoqueManufatua_API.EndPoints
         {
             return new ProjetoResponse(
                 entity.Id,
-                entity.Plataforma);
-                //entity.Componente?.ID ?? 0,
-                //entity.Componente?.PN ?? "Componente não encontrado");
+                entity.Plataforma,
+                entity.Componente?.Id ?? 0,
+                entity.Componente?.PN ?? "Componente não encontrado");
         }
 
     }
