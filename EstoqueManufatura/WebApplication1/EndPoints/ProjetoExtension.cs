@@ -10,7 +10,10 @@ namespace EstoqueManufatua_API.EndPoints
         public static void AddEndpointsProjeto(this
            WebApplication app)
         {
-            app.MapGet("/Projeto", ([FromServices] DAL<Projeto> dal) =>
+            var groupBuilder = app.MapGroup("Projeto")
+                .RequireAuthorization()
+                .WithTags("Porjetos");
+            groupBuilder.MapGet("", ([FromServices] DAL<Projeto> dal) =>
             {
                 var projlist = dal.Read();
                 var projetoResponseList = EntityListToResponseList(projlist);
@@ -18,7 +21,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapGet("/Projeto/{id}", (int id, [FromServices] DAL<Projeto> dal) =>
+            groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<Projeto> dal) =>
             {
                 var projList = dal.ReadBy(c => c.Id == id);
                 if (projList == null) return Results.NotFound("Projeto não encontrado.");
@@ -26,14 +29,14 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPost("/Projeto", ([FromServices] DAL<Projeto> dal, [FromBody] Projeto c) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<Projeto> dal, [FromBody] Projeto c) =>
             {
                 dal.create(c);
                 return Results.Created();
             }
             );
 
-            app.MapDelete("/Projeto/{id}", ([FromServices] DAL<Projeto> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<Projeto> dal, int id) =>
             {
                 var comp = dal.ReadBy(c => c.Id == id);
                 if (comp == null)
@@ -45,7 +48,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPut("/Projeto", ([FromServices] DAL<Projeto> dal, [FromBody] Projeto c) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<Projeto> dal, [FromBody] Projeto c) =>
             {
                 var compToEdit = dal.ReadBy(e => e.Id == c.Id);
                 if (compToEdit is null) return Results.NotFound();

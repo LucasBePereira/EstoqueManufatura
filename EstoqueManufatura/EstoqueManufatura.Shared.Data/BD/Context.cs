@@ -1,5 +1,7 @@
 ﻿using EstoqueManufatura.Sahred.Models;
+using EstoqueManufatura.Shared.Data.Models;
 using EstoqueManufatura_Console;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace EstoqueManufatura.Shared.Data.BD
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext<AccessUser,AccessRole,int>
     {
         public DbSet<Componente> Componente { get; set; }
         public DbSet<Projeto> Projeto { get; set; }
@@ -25,6 +27,7 @@ namespace EstoqueManufatura.Shared.Data.BD
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Componente>()
                 .HasMany(c => c.Estoques)
                 .WithMany(p => p.Componentes);

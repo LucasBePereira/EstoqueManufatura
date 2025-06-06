@@ -12,8 +12,11 @@ namespace EstoqueManufatua_API.EndPoints
         public static void AddEndpointsComponente(this
            WebApplication app)
         {
+            var groupBuilder = app.MapGroup("Componente")
+                .RequireAuthorization()
+                .WithTags("Componentes");
 
-            app.MapGet("/Componente", ([FromServices] DAL<Componente> dal) =>
+            groupBuilder.MapGet("", ([FromServices] DAL<Componente> dal) =>
             {
                 var componentes = dal.Read();
                 if (componentes == null) return Results.NotFound();
@@ -22,7 +25,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapGet("/Componente/{id}", (int id,[FromServices] DAL<Componente> dal) =>
+            groupBuilder.MapGet("/{id}", (int id,[FromServices] DAL<Componente> dal) =>
             {
                 var comp = dal.ReadBy(c => c.Id == id);
                 if (comp == null) return Results.NotFound("Componente não encontrado.");
@@ -30,7 +33,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPost("/Componente", ([FromServices] DAL<Componente> dal,[FromServices]DAL<Estoque> estoqdal, [FromBody] ComponenteRequest c) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<Componente> dal,[FromServices]DAL<Estoque> estoqdal, [FromBody] ComponenteRequest c) =>
             {
                 dal.create(
                     new Componente(c.PN, c.Descricao)
@@ -43,7 +46,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapDelete("/Componente/{id}", ([FromServices] DAL<Componente> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<Componente> dal, int id) =>
             {
                 var comp = dal.ReadBy(c => c.Id == id);
                 if (comp == null)
@@ -55,7 +58,7 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPut("/Componente", ([FromServices] DAL<Componente> dal, [FromBody] ComponenteEditRequest c) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<Componente> dal, [FromBody] ComponenteEditRequest c) =>
             {
                 var compToEdit = dal.ReadBy(e => e.Id == c.Id);
                 if (compToEdit is null) return Results.NotFound();

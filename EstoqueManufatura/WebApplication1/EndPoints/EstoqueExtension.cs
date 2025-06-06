@@ -12,8 +12,10 @@ namespace EstoqueManufatua_API.EndPoints
         public static void AddEndpointsEstoque(this
         WebApplication app)
         {
-
-            app.MapGet("/Estqoue", ([FromServices] DAL<Estoque> dal) =>
+            var groupBuilder = app.MapGroup("Estoque")
+                .RequireAuthorization()
+                .WithTags("Estoques");
+            groupBuilder.MapGet("", ([FromServices] DAL<Estoque> dal) =>
             {
                 var estoqList = dal.Read();
                 if (estoqList == null) return Results.NotFound();
@@ -22,14 +24,13 @@ namespace EstoqueManufatua_API.EndPoints
             }
             );
 
-            app.MapPost("/Estqoue", ([FromServices] DAL<Estoque> dal, [FromBody] EstoqueRequest estoq) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<Estoque> dal, [FromBody] EstoqueRequest estoq) =>
             {
                 dal.create(RequestToEntity(estoq));
                 return Results.Created();
             });
                
-
-            app.MapDelete("/Estqoue/{id}", ([FromServices] DAL<Estoque> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<Estoque> dal, int id) =>
             {
                 var estoq = dal.ReadBy(c => c.Id == id);
                 if (estoq == null)
@@ -40,7 +41,6 @@ namespace EstoqueManufatua_API.EndPoints
                 return Results.NoContent();
             }
             );
-
 
         }
         private static Estoque RequestToEntity(EstoqueRequest estoq)
