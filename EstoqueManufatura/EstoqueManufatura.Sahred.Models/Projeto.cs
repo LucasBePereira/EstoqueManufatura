@@ -10,14 +10,15 @@ namespace EstoqueManufatura_Console
     {
         public string Plataforma { get; set; } // Project name
 
-        public string Montadora { get; set; } // Project description
-
+        //public string Montadora { get; set; } // Project description
+        public virtual Componente? Componente { get; set; } // Component associated with the project
         public int Id { get; set; }
 
-        public Projeto(string plataforma, string montadora)
+        public Projeto(string plataforma)
         {
             Plataforma = plataforma;
-            Montadora = montadora;
+            //Montadora = montadora;
+            
         }
 
         public override string ToString()

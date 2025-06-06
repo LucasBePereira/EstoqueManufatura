@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using EstoqueManufatura;
+using EstoqueManufatura.Shared.Data;
 
 namespace EstoqueManufatura.Shared.Data.BD
 {
@@ -17,7 +19,7 @@ namespace EstoqueManufatura.Shared.Data.BD
         }
         public void create(T value)
         {
-            context1.Set<T>().ToList().Add(value);
+            context1.Set<T>().Add(value);
             context1.SaveChanges();
         }
         public IEnumerable<T> Read()

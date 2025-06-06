@@ -34,13 +34,13 @@ internal class Program
                     RegistrodeComponente();
                     break;
                 case 2:
-                    //RegistrodePlataforma();
+                    RegistrodePlataforma();
                     break;
                 case 3:
                     Componenteget();
                     break;
                 case 4:
-                    //Plataformaget();
+                    Plataformaget();
                     break;
 
                 default:
@@ -54,14 +54,14 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Registro de componente\n");
             Console.WriteLine("Digite o PN [LLNNLNNNN] do componente a ser cadastrado:\n");
-            string pn = Console.ReadLine();
+            string PN = Console.ReadLine();
             Console.WriteLine("Digite a descrição do componente:\n");
-            string descricao = Console.ReadLine();
+            string Descricao = Console.ReadLine();
 
-            Componente c = new(pn, descricao);
+            Componente c = new(PN, Descricao);
             componenteDAL.create(c);
 
-            Console.WriteLine($"Componente {pn} registrado com sucesso!\n");
+            Console.WriteLine($"Componente {PN} registrado com sucesso!\n");
             Console.ReadKey();
         }
 
@@ -76,45 +76,43 @@ internal class Program
             Console.ReadKey();
         }
 
-        //void Plataformaget()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Exibir detalhes do componente\n");
-        //    Console.WriteLine("Digite o PN do componente cuja Plataformas deseja  consultar:\n");
-        //    string pn = Console.ReadLine();
-        //    if (ComponenteList.ContainsKey(pn))
-        //    {
-        //        Componente p = ComponenteList[pn];
-        //        p.ShowPlataformas();
-        //        Console.WriteLine("\n");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Componente {pn} não encontrado.\n");
-        //    }
-        //}
-
-        //void RegistrodePlataforma()
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Registro de Plataformas\n");
-        //    Console.WriteLine("Digite o PN do componente cuja Plataforma será registrada:\n");
-        //    string pn = Console.ReadLine();
-        //    if (ComponenteList.ContainsKey(pn))
-        //    {
-        //        Console.WriteLine($"Digite o nome da plataforma a ser registrada para {pn}:\n");
-        //        string plataforma = Console.ReadLine();
-        //        Console.WriteLine("Digite a Motadora da plataforma:\n");
-        //        string montadora = Console.ReadLine();
-        //        Componente p = ComponenteList[pn];
-        //        p.AdicionarProjeto(new Projeto(plataforma, montadora));
-
-        //        Console.WriteLine($"Plataforma {plataforma} registrada com sucesso!\n");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Componente {pn} não encontrado.\n");
-        //    }
-        //}
+        void Plataformaget()
+        {
+            Console.Clear();
+            Console.WriteLine("Exibir detalhes do componente\n");
+            Console.WriteLine("Digite o PN do componente cuja Plataformas deseja  consultar:\n");
+            string pn = Console.ReadLine();
+            var targetComponente = componenteDAL.ReadBy(c => c.PN.Equals(pn));
+            if (targetComponente is not null)
+            {
+                targetComponente.ShowPlataformas();
+            }
+            else
+            {
+                Console.WriteLine($"Componente {pn} não encontrado.\n");
+            }
+            Console.ReadKey();
+        }
+        void RegistrodePlataforma()
+        {
+            Console.Clear();
+            Console.WriteLine("Registro de Plataformas\n");
+            Console.WriteLine("Digite o PN do componente cuja Plataforma será registrada:\n");
+            string pn = Console.ReadLine();
+            var targetComponente = componenteDAL.ReadBy(c => c.PN.Equals(pn));
+            if (targetComponente is not null)
+            {
+                Console.WriteLine($"Digite o nome da plataforma a ser registrada para {pn}:\n");
+                string plataforma = Console.ReadLine();
+                targetComponente.AdicionarProjeto(new Projeto(plataforma));
+                componenteDAL.Update(targetComponente);
+                Console.WriteLine($"Plataforma {plataforma} registrada com sucesso!\n");
+            }
+            else
+            {
+                Console.WriteLine($"Componente {pn} não encontrado.\n");
+            }
+            Console.ReadKey();
+        }
     }
 }
